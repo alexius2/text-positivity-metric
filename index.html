@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Positivity metric calculator</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Positivity metric calculator">
+  <meta name="author" content="Alexey Ermakov">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Positivity metric calculator</h1>
+    <h2>Course Project for Developing Data Products class</h2>
+    <p>Alexey Ermakov<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>What is it?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>This is attempt to get emotional context for given text</li>
+<li>Is it something positive or negative? </li>
+<li>The app is trying to estimate this and give numeric result on scale 0 to 10</li>
+<li>0 means text is totaly negative and you probably shouldn&#39;t read it :)</li>
+<li>10 means the text is awesome</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>How it works</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The team from University of Vermon made a great research <a href="http://arxiv.org/pdf/1406.3855v1.pdf">Human language reveals a universal positivity bias</a>. They get around 10000 most frequent english words and ask thousands of native speakers to rate each word on a 9 point scale, with 1 corresponding to most negative or saddest, 5 to neutral, and 9 to most positive or happiest.</li>
+<li>The results were <a href="http://www.uvm.edu/storylab/share/papers/dodds2014a/data.html">published</a>. For each language they provide 2 files: one with words and one with average rate for each word.</li>
+<li>Shiny application process given text using <a href="http://cran.r-project.org/web/packages/tm/">Text Mining</a> package removing punctuation, stop words, white spaces and gets matrix of words and their counts.</li>
+<li>Then using files from the research app is calculating average rate of the dictionary words which were in text.</li>
+<li>The result is normalized number from 0 to 10 which represents &quot;positivity&quot; of given text and 2 lists with most positive and most negative words</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article data-timings="">
+    <h5>get matrix of words for text from the news</h5>
+
+<pre><code class="r">wordMatrix &lt;- getWordMatrix(&quot;The leaders of the House and Senate Veterans Affairs committees reached a tentative deal Sunday to improve veterans&#39; health care -- a potential solution to help fix such ongoing problems as delays for benefits and long waits for medical treatment concealed by secret lists.&quot;)
+wordMatrix[1:5,]
+</code></pre>
+
+<pre><code>##            word count weight
+## 283     affairs     1  4.722
+## 963    benefits     1  8.194
+## 1423       care     1  7.417
+## 1836 committees     1  5.222
+## 2344       deal     1  6.972
+</code></pre>
+
+<pre><code class="r">getPositivity(wordMatrix)
+</code></pre>
+
+<pre><code>## [1] 5.978
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Try it by yourself!</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Shiny App <a href="http://alexius.shinyapps.io/text-positivity-metric/">http://alexius.shinyapps.io/text-positivity-metric/</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='What is it?'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='How it works'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Example'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Try it by yourself!'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

@@ -1,0 +1,54 @@
+---
+title       : Positivity metric calculator
+subtitle    : Course Project for Developing Data Products class
+author      : Alexey Ermakov
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## What is it?
+
+* This is attempt to get emotional context for given text
+* Is it something positive or negative? 
+* The app is trying to estimate this and give numeric result on scale 0 to 10
+* 0 means text is totaly negative and you probably shouldn't read it :)
+* 10 means the text is awesome
+
+--- .class #id 
+
+## How it works
+* The team from University of Vermon made a great research [Human language reveals a universal positivity bias] (http://arxiv.org/pdf/1406.3855v1.pdf). They get around 10000 most frequent english words and ask thousands of native speakers to rate each word on a 9 point scale, with 1 corresponding to most negative or saddest, 5 to neutral, and 9 to most positive or happiest.
+* The results were [published] (http://www.uvm.edu/storylab/share/papers/dodds2014a/data.html). For each language they provide 2 files: one with words and one with average rate for each word.
+* Shiny application process given text using [Text Mining](http://cran.r-project.org/web/packages/tm/) package removing punctuation, stop words, white spaces and gets matrix of words and their counts.
+* Then using files from the research app is calculating average rate of the dictionary words which were in text.
+* The result is normalized number from 0 to 10 which represents "positivity" of given text and 2 lists with most positive and most negative words
+
+--- .class #id 
+
+## Example
+##### get matrix of words for text from the news
+```{r echo=FALSE}
+setwd("../")
+source("server.R")
+```
+```{r}
+wordMatrix <- getWordMatrix("The leaders of the House and Senate Veterans Affairs committees reached a tentative deal Sunday to improve veterans' health care -- a potential solution to help fix such ongoing problems as delays for benefits and long waits for medical treatment concealed by secret lists.")
+wordMatrix[1:5,]
+```
+
+```{r}
+getPositivity(wordMatrix)
+```
+
+--- .class #id 
+
+## Try it by yourself!
+
+* Shiny App [http://alexius.shinyapps.io/text-positivity-metric/](http://alexius.shinyapps.io/text-positivity-metric/)
+
+
